@@ -114,8 +114,8 @@ export default function Hero() {
 
     const timers = [
       window.setTimeout(() => setPhase("split"), 1150), // open the thumbnail
-      window.setTimeout(() => setPhase("grow"), 3500), // hold ~1.5s, then expand
-      window.setTimeout(() => setPhase("done"), 5200),
+      window.setTimeout(() => setPhase("grow"), 2550), // hold ~0.5s, then expand
+      window.setTimeout(() => setPhase("done"), 4250),
     ];
 
     return () => timers.forEach(window.clearTimeout);
