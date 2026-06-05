@@ -580,6 +580,8 @@ body {
 }
 
 .dg-foot {
+  position: relative;
+  z-index: 1; /* sit above the home hero's fixed background */
   background: #2f6b62;
   color: #eafaf6;
   border-top: 3px solid var(--ink);

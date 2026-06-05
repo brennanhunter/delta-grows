@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import SiteHeader from "@/app/components/SiteHeader";
-import SiteFooter from "@/app/components/SiteFooter";
 import TransitionLink from "@/app/components/TransitionLink";
 
 export const metadata: Metadata = {
@@ -123,8 +122,6 @@ export default function ResourcesPage() {
         Looking for video stories instead?{" "}
         <TransitionLink href="/gallery">Visit the Gallery &rarr;</TransitionLink>
       </p>
-
-      <SiteFooter />
     </main>
   );
 }

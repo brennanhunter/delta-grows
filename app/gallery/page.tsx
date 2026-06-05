@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import SiteHeader from "@/app/components/SiteHeader";
-import SiteFooter from "@/app/components/SiteFooter";
 import VideoBubbles from "@/app/components/VideoBubbles";
 
 export const metadata: Metadata = {
@@ -22,8 +21,6 @@ export default function GalleryPage() {
       </div>
 
       <VideoBubbles />
-
-      <SiteFooter />
     </main>
   );
 }

@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import SiteHeader from "@/app/components/SiteHeader";
-import SiteFooter from "@/app/components/SiteFooter";
 import aboutImage from "@/public/relevant_docs/current_site/about_us/about-image.png";
 
 export const metadata: Metadata = {
@@ -124,8 +123,6 @@ export default function AboutPage() {
           </div>
         </section>
       </article>
-
-      <SiteFooter />
     </main>
   );
 }
