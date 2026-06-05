@@ -5,7 +5,9 @@ import { useRouter } from "next/navigation";
 import type { ComponentProps, MouseEvent } from "react";
 
 type DocumentWithVT = Document & {
-  startViewTransition?: (callback: () => void) => { finished: Promise<void> };
+  startViewTransition?: (
+    callback: () => void | Promise<void>,
+  ) => { finished: Promise<void> };
 };
 
 /**
