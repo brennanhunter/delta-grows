@@ -892,3 +892,256 @@ body {
     animation-delay: 0s !important;
   }
 }
+
+/* ============================================================
+   Gallery — floating video bubbles + center stage
+   ============================================================ */
+
+.dg-gallery {
+  min-height: 100dvh;
+  background: #f4ecd9;
+  color: #1c1a16;
+  font-family: var(--font-geist-sans), system-ui, sans-serif;
+}
+
+.dg-gallery__head {
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: clamp(2rem, 5vw, 3.5rem) clamp(1.25rem, 4vw, 3.5rem) 0;
+}
+
+.dg-gallery__title {
+  margin: 0.25rem 0 0;
+  font-size: clamp(2.2rem, 5.5vw, 4rem);
+  font-weight: 900;
+  letter-spacing: -0.02em;
+  line-height: 1.02;
+}
+
+.dg-gallery__title .accent {
+  color: var(--orange);
+}
+
+.dg-bubbles {
+  position: relative;
+}
+
+.dg-bubbles__hint {
+  margin: 1.25rem auto 0;
+  text-align: center;
+  color: #5a5346;
+  font-size: 0.95rem;
+  font-weight: 600;
+}
+
+.dg-bubbles__field {
+  --scale: 1;
+  position: relative;
+  width: 100%;
+  max-width: 1100px;
+  margin: 1rem auto 0;
+  min-height: clamp(520px, 72vh, 760px);
+}
+
+.dg-bubble {
+  position: absolute;
+  width: calc(var(--size) * var(--scale));
+  height: calc(var(--size) * var(--scale));
+  margin-left: calc(var(--size) * var(--scale) / -2);
+  margin-top: calc(var(--size) * var(--scale) / -2);
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+  animation: dgFloat var(--dur, 7s) ease-in-out var(--delay, 0s) infinite;
+}
+
+@keyframes dgFloat {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(var(--drift, -10px));
+  }
+}
+
+.dg-bubble__disc {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 3px solid var(--ink);
+  box-shadow: 6px 6px 0 var(--ink);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.dg-bubble:hover .dg-bubble__disc,
+.dg-bubble:focus-visible .dg-bubble__disc {
+  transform: scale(1.06);
+  box-shadow: 8px 8px 0 var(--ink);
+}
+
+.dg-bubble__img {
+  object-fit: cover;
+}
+
+.dg-bubble__play {
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  width: 44px;
+  height: 44px;
+  display: grid;
+  place-items: center;
+  color: #ffffff;
+  background: rgba(21, 18, 14, 0.55);
+  border: 2px solid rgba(255, 255, 255, 0.85);
+  border-radius: 50%;
+  transition: background 0.2s ease;
+}
+
+.dg-bubble__play svg {
+  width: 20px;
+  height: 20px;
+  margin-left: 2px;
+}
+
+.dg-bubble:hover .dg-bubble__play,
+.dg-bubble:focus-visible .dg-bubble__play {
+  background: var(--orange);
+}
+
+.dg-bubble__label {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 50%;
+  transform: translateX(-50%);
+  display: block;
+  max-width: 220px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  padding: 2px 8px;
+  background: #f6edda;
+  border: 2px solid var(--ink);
+  border-radius: 6px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: #2a2620;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+}
+
+.dg-bubble:hover .dg-bubble__label,
+.dg-bubble:focus-visible .dg-bubble__label {
+  opacity: 1;
+}
+
+/* Center stage */
+.dg-stage {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  display: grid;
+  place-items: center;
+  padding: 1.75rem;
+  background: rgba(15, 18, 16, 0.82);
+  animation: dgStageFade 0.2s ease both;
+}
+
+@keyframes dgStageFade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.dg-stage__inner {
+  position: relative;
+  width: min(960px, 100%);
+  animation: dgStagePop 0.32s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes dgStagePop {
+  from {
+    opacity: 0;
+    transform: scale(0.85);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.dg-stage__frame {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  width: 100%;
+  overflow: hidden;
+  background: #000000;
+  border: 3px solid var(--ink);
+  border-radius: 4px;
+  box-shadow: 10px 10px 0 var(--ink);
+}
+
+.dg-stage__frame iframe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+.dg-stage__close {
+  position: absolute;
+  top: -16px;
+  right: -16px;
+  z-index: 2;
+  width: 44px;
+  height: 44px;
+  display: grid;
+  place-items: center;
+  color: #ffffff;
+  background: var(--orange);
+  border: 3px solid var(--ink);
+  border-radius: 50%;
+  box-shadow: 4px 4px 0 var(--ink);
+  cursor: pointer;
+  transition: transform 0.12s ease, box-shadow 0.12s ease;
+}
+
+.dg-stage__close:hover {
+  transform: translate(-1px, -1px);
+  box-shadow: 5px 5px 0 var(--ink);
+}
+
+.dg-stage__close svg {
+  width: 22px;
+  height: 22px;
+}
+
+.dg-stage__title {
+  margin: 1rem 0 0;
+  text-align: center;
+  color: #f4ecd9;
+  font-weight: 800;
+  font-size: 1.05rem;
+}
+
+@media (max-width: 700px) {
+  .dg-bubbles__field {
+    --scale: 0.62;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dg-bubble {
+    animation: none;
+  }
+}

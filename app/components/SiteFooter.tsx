@@ -18,7 +18,7 @@ export default function SiteFooter() {
         <nav className="dg-foot__nav" aria-label="Footer">
           <TransitionLink href="/about">About</TransitionLink>
           <TransitionLink href="/#courses">Courses</TransitionLink>
-          <TransitionLink href="/#gallery">Gallery</TransitionLink>
+          <TransitionLink href="/gallery">Gallery</TransitionLink>
           <TransitionLink href="/#resources">Resources</TransitionLink>
           <TransitionLink href="/#contact">Contact</TransitionLink>
         </nav>

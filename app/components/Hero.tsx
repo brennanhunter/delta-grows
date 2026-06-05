@@ -177,7 +177,7 @@ export default function Hero() {
           <nav className="dg-nav__links" aria-label="Primary">
             <TransitionLink href="/about">About</TransitionLink>
             <a href="#courses">Courses</a>
-            <a href="#gallery">Gallery</a>
+            <TransitionLink href="/gallery">Gallery</TransitionLink>
             <a href="#resources">Resources</a>
             <a href="#contact" className="dg-nav__cta">
               Contact

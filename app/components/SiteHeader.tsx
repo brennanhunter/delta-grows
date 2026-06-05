@@ -6,7 +6,7 @@ import logo from "@/public/logo.webp";
 const links = [
   { href: "/about", label: "About" },
   { href: "/#courses", label: "Courses" },
-  { href: "/#gallery", label: "Gallery" },
+  { href: "/gallery", label: "Gallery" },
   { href: "/#resources", label: "Resources" },
 ];
 
