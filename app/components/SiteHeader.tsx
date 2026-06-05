@@ -1,5 +1,4 @@
 import Image from "next/image";
-import Link from "next/link";
 import TransitionLink from "@/app/components/TransitionLink";
 import logo from "@/public/logo.webp";
 
@@ -7,7 +6,7 @@ const links = [
   { href: "/about", label: "About" },
   { href: "/#courses", label: "Courses" },
   { href: "/gallery", label: "Gallery" },
-  { href: "/#resources", label: "Resources" },
+  { href: "/resources", label: "Resources" },
 ];
 
 /**
@@ -18,7 +17,11 @@ export default function SiteHeader({ active }: { active?: string }) {
   return (
     <header className="dg-mast">
       <div className="dg-mast__bar">
-        <Link href="/" className="dg-mast__brand" aria-label="Delta Grows home">
+        <TransitionLink
+          href="/"
+          className="dg-mast__brand"
+          aria-label="Delta Grows home"
+        >
           <Image
             src={logo}
             alt="Delta Grows"
@@ -26,7 +29,7 @@ export default function SiteHeader({ active }: { active?: string }) {
             priority
             sizes="150px"
           />
-        </Link>
+        </TransitionLink>
         <nav className="dg-mast__nav" aria-label="Primary">
           {links.map((link) => (
             <TransitionLink

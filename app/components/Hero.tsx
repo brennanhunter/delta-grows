@@ -1,9 +1,14 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import { useEffect, useLayoutEffect, useState } from "react";
 import TransitionLink from "@/app/components/TransitionLink";
 import logo from "@/public/logo.webp";
+import heroImage from "@/public/images/hands-hold-plant.jpeg";
+
+// Runs before paint on the client so return visits never flash the loader.
+const useIsomorphicLayoutEffect =
+  typeof window !== "undefined" ? useLayoutEffect : useEffect;
 
 /**
  * Delta Grows hero.
@@ -34,88 +39,32 @@ const pillars = [
   },
 ];
 
-/**
- * The image revealed between the splitting words, then grown to full screen.
- * Swap this <svg> for a real photo when you have one, e.g.:
- *   <Image className="dg-reveal__media" src={fieldPhoto} alt="" fill priority />
- * `object-fit: cover` (set in CSS) makes it read as a vertical slice during the
- * split and a full image once it fills the screen — exactly like the reference.
- */
-function FieldScene({ idSuffix }: { idSuffix: string }) {
-  const sky = `dgSky-${idSuffix}`;
-  const field = `dgField-${idSuffix}`;
-  const glow = `dgGlow-${idSuffix}`;
-  return (
-    <svg
-      className="dg-reveal__media"
-      viewBox="0 0 1200 800"
-      preserveAspectRatio="xMidYMid slice"
-      role="img"
-      aria-label="Black-and-white Mississippi Delta farmland at sunrise"
-    >
-      <defs>
-        <linearGradient id={sky} x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0" stopColor="#9aa09c" />
-          <stop offset="0.6" stopColor="#cfd3cf" />
-          <stop offset="1" stopColor="#eef0ec" />
-        </linearGradient>
-        <linearGradient id={field} x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0" stopColor="#50504a" />
-          <stop offset="1" stopColor="#1e1c19" />
-        </linearGradient>
-        <radialGradient id={glow} cx="0.5" cy="0.5" r="0.5">
-          <stop offset="0" stopColor="#ffffff" stopOpacity="0.95" />
-          <stop offset="1" stopColor="#ffffff" stopOpacity="0" />
-        </radialGradient>
-      </defs>
-
-      <rect width="1200" height="800" fill={`url(#${sky})`} />
-      {/* sun glow + disc */}
-      <circle cx="815" cy="298" r="250" fill={`url(#${glow})`} />
-      <circle cx="815" cy="298" r="74" fill="#fcfcf9" />
-      {/* distant tree line */}
-      <path
-        d="M0 470 Q 250 452 470 466 Q 700 482 920 458 Q 1080 446 1200 458 L 1200 488 L 0 488 Z"
-        fill="#34362f"
-      />
-      {/* field */}
-      <rect x="0" y="478" width="1200" height="322" fill={`url(#${field})`} />
-      {/* furrow shading for depth */}
-      <g fill="#000000" fillOpacity="0.12">
-        <path d="M0 478 L1200 478 L1200 524 L0 552 Z" />
-        <path d="M0 612 L1200 566 L1200 648 L0 712 Z" />
-      </g>
-      {/* light crop rows converging toward the horizon */}
-      <g stroke="#eef0ec" strokeOpacity="0.5" strokeWidth="3">
-        <path d="M600 480 L -220 810" />
-        <path d="M600 480 L 90 810" />
-        <path d="M600 480 L 360 810" />
-        <path d="M600 480 L 600 810" />
-        <path d="M600 480 L 840 810" />
-        <path d="M600 480 L 1110 810" />
-        <path d="M600 480 L 1420 810" />
-      </g>
-    </svg>
-  );
-}
-
 export default function Hero() {
   const [phase, setPhase] = useState<Phase>("intro");
 
-  useEffect(() => {
-    const prefersReducedMotion =
-      typeof window !== "undefined" &&
-      window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  useIsomorphicLayoutEffect(() => {
+    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    let seen = false;
+    try {
+      seen = sessionStorage.getItem("dg-hero-intro") === "1";
+    } catch {}
 
-    if (prefersReducedMotion) {
+    // Cinematic intro plays once per session (first visit). On return visits we
+    // jump straight to the hero — the page just opens from the center via the
+    // normal navigation transition.
+    if (reduce || seen) {
       setPhase("done");
       return;
     }
 
+    try {
+      sessionStorage.setItem("dg-hero-intro", "1");
+    } catch {}
+
     const timers = [
-      window.setTimeout(() => setPhase("split"), 1150), // open the thumbnail
-      window.setTimeout(() => setPhase("grow"), 2550), // hold ~0.5s, then expand
-      window.setTimeout(() => setPhase("done"), 4250),
+      window.setTimeout(() => setPhase("split"), 800), // open the thumbnail
+      window.setTimeout(() => setPhase("grow"), 1850), // hold ~0.5s, then expand
+      window.setTimeout(() => setPhase("done"), 2950),
     ];
 
     return () => timers.forEach(window.clearTimeout);
@@ -125,7 +74,14 @@ export default function Hero() {
     <section className={`dg-hero dg-hero--${phase}`}>
       {/* Persistent background the reveal lands on, so the image stays */}
       <div className="dg-hero__bg" aria-hidden="true">
-        <FieldScene idSuffix="bg" />
+        <Image
+          src={heroImage}
+          alt=""
+          fill
+          priority
+          className="dg-reveal__media"
+          sizes="100vw"
+        />
         <div className="dg-hero__scrim" />
       </div>
 
@@ -145,7 +101,14 @@ export default function Hero() {
 
             <span className="dg-loader__box">
               <span className="dg-reveal">
-                <FieldScene idSuffix="load" />
+                <Image
+                  src={heroImage}
+                  alt=""
+                  fill
+                  priority
+                  className="dg-reveal__media"
+                  sizes="340px"
+                />
               </span>
             </span>
 
@@ -178,7 +141,7 @@ export default function Hero() {
             <TransitionLink href="/about">About</TransitionLink>
             <a href="#courses">Courses</a>
             <TransitionLink href="/gallery">Gallery</TransitionLink>
-            <a href="#resources">Resources</a>
+            <TransitionLink href="/resources">Resources</TransitionLink>
             <a href="#contact" className="dg-nav__cta">
               Contact
             </a>

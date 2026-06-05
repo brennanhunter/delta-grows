@@ -10,9 +10,9 @@ type DocumentWithVT = Document & {
 
 /**
  * Drop-in replacement for next/link that plays the center-split view
- * transition when navigating to any non-home page. Navigations to "/" (the
- * home page, which has its own hero intro), same-page hashes, external links,
- * and modified/new-tab clicks all use normal routing.
+ * transition for any in-app page navigation (including back to home — the
+ * cinematic hero intro only plays on the first visit of a session). Same-page
+ * hashes, external links, and modified/new-tab clicks use normal routing.
  */
 export default function TransitionLink({
   href,
@@ -46,7 +46,6 @@ export default function TransitionLink({
     }
 
     if (dest.origin !== window.location.origin) return; // external
-    if (dest.pathname === "/") return; // navigating to home → no split
     if (dest.pathname === window.location.pathname) return; // same page
 
     const doc = document as DocumentWithVT;
