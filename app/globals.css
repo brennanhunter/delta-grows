@@ -3,11 +3,18 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  /* shared neobrutalist palette */
+  --ink: #15120e;
+  --green: #589f95;
+  --orange: #d66709;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --color-primary: #589f95;
+  --color-secondary: #d66709;
+  --color-surface: #ffffff;
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
@@ -23,4 +30,865 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
+  overflow-x: hidden;
+}
+
+/* ============================================================
+   Delta Grows hero — "Willem"-style grow-to-reveal intro
+   (see hero-effect.md). Brand palette from :root above.
+   ============================================================ */
+
+.dg-hero {
+  /* Neobrutalist palette tokens */
+  --ink: #15120e;
+  --green: #589f95;
+  --orange: #d66709;
+  position: relative;
+  display: flex;
+  min-height: 100dvh;
+  overflow: hidden;
+  background: #efe7d6;
+  font-family: var(--font-geist-sans), "Inter", system-ui, sans-serif;
+}
+
+/* Persistent, viewport-fixed image background. The loader's growing reveal
+   uses the identical scene at the same size, so when the loader fades the
+   image simply stays. */
+.dg-hero__bg {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+}
+
+.dg-hero__scrim {
+  position: absolute;
+  inset: 0;
+  /* light veil up top keeps the logo/nav legible; dark veil at the bottom
+     keeps the headline and copy legible over the field. */
+  background:
+    linear-gradient(180deg, rgba(250, 247, 239, 0.6) 0%, rgba(250, 247, 239, 0) 26%),
+    linear-gradient(180deg, rgba(18, 42, 38, 0) 44%, rgba(15, 36, 33, 0.88) 100%);
+}
+
+/* ---------- Loading overlay ---------- */
+
+.dg-loader {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(180deg, #fcfbf7 0%, #f4efe4 100%);
+}
+
+/* Fade the loader once the reveal has filled the screen */
+.dg-hero--grow .dg-loader {
+  animation: dgLoaderOut 0.6s ease 0.95s forwards;
+}
+
+@keyframes dgLoaderOut {
+  to {
+    opacity: 0;
+    visibility: hidden;
+  }
+}
+
+.dg-loader__logo {
+  /* logo display size (intrinsic 500×350 → ratio 0.7), and the small image
+     card it opens (image ratio 3:2, so the whole picture shows) */
+  --logo-w: clamp(190px, 38vw, 340px);
+  --logo-h: calc(var(--logo-w) * 0.7);
+  --img-w: var(--logo-w);
+  --img-h: calc(var(--img-w) / 1.5);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Each half is a window onto one portion of the logo. With the gap closed the
+   two windows are adjacent, so a single rise reads as the whole logo sliding
+   up; opening the gap then pulls the halves apart. */
+.dg-loader__half {
+  position: relative;
+  z-index: 2; /* ride above the expanding image as they slide out */
+  flex: none;
+  width: var(--logo-w);
+  height: calc(var(--logo-h) / 2);
+  overflow: hidden;
+  transition: transform 0.9s cubic-bezier(0.76, 0, 0.24, 1);
+}
+
+.dg-logo-img {
+  position: absolute;
+  left: 0;
+  width: var(--logo-w);
+  height: var(--logo-h);
+  max-width: none;
+  object-fit: contain;
+  transform: translateY(118%);
+  animation: dgLogoUp 1s cubic-bezier(0.22, 1, 0.36, 1) 0.1s forwards;
+}
+
+.dg-loader__half--top .dg-logo-img {
+  top: 0;
+}
+
+.dg-loader__half--bottom .dg-logo-img {
+  top: calc(var(--logo-h) / -2);
+}
+
+@keyframes dgLogoUp {
+  to {
+    transform: translateY(0);
+  }
+}
+
+/* a little extra separation as the gap first opens */
+.dg-hero--split .dg-loader__half--top {
+  transform: translateY(-0.4rem);
+}
+
+.dg-hero--split .dg-loader__half--bottom {
+  transform: translateY(0.4rem);
+}
+
+/* then keep sliding the halves clear off the screen edges as the image fills */
+.dg-hero--grow .dg-loader__half--top {
+  transform: translateY(-75vh);
+}
+
+.dg-hero--grow .dg-loader__half--bottom {
+  transform: translateY(75vh);
+}
+
+/* In-flow spacer between the halves; growing its height pulls them apart */
+.dg-loader__box {
+  flex: none;
+  width: var(--img-w);
+  height: 0;
+  transition: height 0.9s cubic-bezier(0.76, 0, 0.24, 1);
+}
+
+.dg-hero--split .dg-loader__box,
+.dg-hero--grow .dg-loader__box {
+  height: var(--img-h);
+}
+
+/* Revealed image — opens as a band the width of the logo, then fills screen */
+.dg-reveal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  z-index: 1; /* below the logo halves so they slide out over it */
+  width: var(--img-w);
+  height: 0;
+  transform: translate(-50%, -50%);
+  overflow: hidden;
+  border: 3px solid transparent;
+  border-radius: 0.6rem;
+  box-shadow: none;
+  transition:
+    width 0.9s cubic-bezier(0.76, 0, 0.24, 1),
+    height 0.9s cubic-bezier(0.76, 0, 0.24, 1),
+    border-radius 0.9s ease,
+    border-color 0.6s ease,
+    box-shadow 0.6s ease;
+}
+
+/* frame only appears once the card has opened */
+.dg-hero--split .dg-reveal {
+  height: var(--img-h);
+  border-color: var(--ink);
+  box-shadow: 8px 8px 0 var(--ink);
+}
+
+.dg-hero--grow .dg-reveal {
+  width: 100vw;
+  height: 100dvh;
+  border-radius: 0;
+  border-color: transparent;
+  box-shadow: none;
+}
+
+/* Fills its container and scales with it: in the small card (which matches the
+   image's 3:2 ratio) the whole picture shows; once it fills the screen, cover
+   crops to fill. The persistent background uses the same rule full-screen. */
+.dg-reveal__media {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  /* black & white imagery — accents come from the UI on top */
+  filter: grayscale(1) contrast(1.08);
+}
+
+/* ---------- Hero content ---------- */
+
+.dg-hero__content {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  min-height: 100dvh;
+  padding: clamp(1.25rem, 3vw, 2.5rem) clamp(1.25rem, 4vw, 3.5rem)
+    clamp(2rem, 4vw, 3rem);
+}
+
+.dg-hero--intro .dg-hero__content,
+.dg-hero--split .dg-hero__content {
+  opacity: 0;
+}
+
+.dg-hero--grow .dg-hero__content {
+  animation: dgContentIn 0.9s cubic-bezier(0.22, 1, 0.36, 1) 0.25s both;
+}
+
+@keyframes dgContentIn {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Nav */
+.dg-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.dg-nav__brand {
+  display: inline-flex;
+}
+
+.dg-nav__logo {
+  width: clamp(108px, 12vw, 150px);
+  height: auto;
+}
+
+.dg-nav__links {
+  display: flex;
+  align-items: center;
+  gap: clamp(0.9rem, 2.2vw, 1.75rem);
+  flex-wrap: wrap;
+}
+
+.dg-nav__links a {
+  color: #15120e;
+  text-decoration: none;
+  font-size: 0.95rem;
+  font-weight: 700;
+  transition: color 0.2s ease;
+}
+
+.dg-nav__links a:hover {
+  color: #000000;
+}
+
+.dg-nav__cta {
+  padding: 0.5rem 1rem;
+  background: var(--orange);
+  color: #ffffff !important;
+  font-weight: 800;
+  border: 2.5px solid var(--ink);
+  border-radius: 7px;
+  box-shadow: 4px 4px 0 var(--ink);
+  transition: transform 0.12s ease, box-shadow 0.12s ease;
+}
+
+.dg-nav__cta:hover {
+  transform: translate(-1px, -1px);
+  box-shadow: 5px 5px 0 var(--ink);
+}
+
+.dg-nav__cta:active {
+  transform: translate(2px, 2px);
+  box-shadow: 2px 2px 0 var(--ink);
+}
+
+/* Main copy block */
+.dg-hero__main {
+  margin-top: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 1.4rem;
+  max-width: 62rem;
+  padding-top: 2rem;
+}
+
+.dg-hero__eyebrow {
+  align-self: flex-start;
+  margin: 0;
+  padding: 0.4rem 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-size: 0.78rem;
+  font-weight: 800;
+  color: #15120e;
+  background: #f4ead3;
+  border: 2.5px solid var(--ink);
+  border-radius: 7px;
+  box-shadow: 4px 4px 0 var(--ink);
+}
+
+.dg-hero__title {
+  margin: 0;
+  font-size: clamp(2.5rem, 6.2vw, 5.2rem);
+  line-height: 1;
+  font-weight: 900;
+  letter-spacing: -0.025em;
+  color: #ffffff;
+  text-shadow: 4px 4px 0 var(--ink);
+}
+
+.dg-hero__accent {
+  color: #f7a83f;
+}
+
+.dg-hero__copy {
+  margin: 0;
+  max-width: 42rem;
+  color: rgba(255, 255, 255, 0.88);
+  font-size: clamp(1rem, 1.4vw, 1.2rem);
+  line-height: 1.75;
+  text-shadow: 0 1px 18px rgba(10, 26, 23, 0.3);
+}
+
+.dg-hero__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-top: 0.4rem;
+}
+
+.dg-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.85rem 1.6rem;
+  border: 2.5px solid var(--ink);
+  border-radius: 9px;
+  font-weight: 800;
+  font-size: 1rem;
+  text-decoration: none;
+  box-shadow: 5px 5px 0 var(--ink);
+  transition: transform 0.12s ease, box-shadow 0.12s ease, background 0.2s ease;
+}
+
+.dg-btn:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 7px 7px 0 var(--ink);
+}
+
+.dg-btn:active {
+  transform: translate(3px, 3px);
+  box-shadow: 2px 2px 0 var(--ink);
+}
+
+.dg-btn--primary {
+  background: var(--orange);
+  color: #ffffff;
+}
+
+.dg-btn--primary:hover {
+  background: #e3760f;
+}
+
+.dg-btn--ghost {
+  background: var(--green);
+  color: #0c2f2a;
+}
+
+.dg-btn--ghost:hover {
+  background: #66ada3;
+}
+
+.dg-hero__trust {
+  margin: 0.4rem 0 0;
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.78);
+}
+
+.dg-hero__trust strong {
+  color: #cfeae3;
+}
+
+/* Pillars: Educate / Activate / Elevate */
+.dg-pillars {
+  list-style: none;
+  margin: clamp(2rem, 4vw, 3rem) 0 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: clamp(1rem, 2.4vw, 1.75rem);
+}
+
+.dg-pillar {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 1.25rem 1.35rem;
+  background: #f6edda;
+  border: 3px solid var(--ink);
+  border-radius: 12px;
+  box-shadow: 6px 6px 0 var(--ink);
+}
+
+.dg-pillar:nth-child(1) {
+  background: #cfe7e1;
+}
+
+.dg-pillar:nth-child(3) {
+  background: #f7d8b0;
+}
+
+.dg-pillar__title {
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 1rem;
+  color: #15120e;
+}
+
+.dg-pillar__copy {
+  color: #2a2620;
+  font-size: 0.92rem;
+  line-height: 1.55;
+}
+
+@media (max-width: 760px) {
+  .dg-pillars {
+    grid-template-columns: 1fr;
+  }
+
+  .dg-hero__main {
+    margin-top: 3rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dg-loader,
+  .dg-logo-img,
+  .dg-loader__half,
+  .dg-loader__box,
+  .dg-reveal,
+  .dg-hero__content {
+    animation: none !important;
+    transition: none !important;
+  }
+
+  .dg-hero__content {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* ============================================================
+   Newspaper / neobrutalist masthead + footer (shared)
+   ============================================================ */
+
+.dg-mast {
+  position: sticky;
+  top: 0;
+  z-index: 30;
+  background: #f6efdf;
+  border-bottom: 3px solid var(--ink);
+  font-family: var(--font-geist-sans), system-ui, sans-serif;
+}
+
+.dg-mast__bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+  padding: 0.75rem clamp(1.25rem, 4vw, 3.5rem);
+}
+
+.dg-mast__logo {
+  width: clamp(104px, 11vw, 140px);
+  height: auto;
+}
+
+.dg-mast__nav {
+  display: flex;
+  align-items: center;
+  gap: clamp(0.85rem, 2vw, 1.6rem);
+  flex-wrap: wrap;
+}
+
+.dg-mast__nav a {
+  color: #15120e;
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 0.95rem;
+}
+
+.dg-mast__nav a:hover {
+  color: #000000;
+}
+
+.dg-mast__nav a.is-active {
+  text-decoration: underline;
+  text-decoration-color: var(--orange);
+  text-decoration-thickness: 3px;
+  text-underline-offset: 5px;
+}
+
+.dg-mast__cta {
+  padding: 0.5rem 1rem;
+  background: var(--orange);
+  color: #ffffff !important;
+  font-weight: 800;
+  border: 2.5px solid var(--ink);
+  border-radius: 7px;
+  box-shadow: 4px 4px 0 var(--ink);
+  transition: transform 0.12s ease, box-shadow 0.12s ease;
+}
+
+.dg-mast__cta:hover {
+  transform: translate(-1px, -1px);
+  box-shadow: 5px 5px 0 var(--ink);
+}
+
+.dg-mast__cta:active {
+  transform: translate(2px, 2px);
+  box-shadow: 2px 2px 0 var(--ink);
+}
+
+.dg-mast__tagline {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 0.5rem 1.5rem;
+  border-top: 1.5px solid var(--ink);
+  padding: 0.45rem 1rem;
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  font-weight: 700;
+  color: #3a352c;
+}
+
+.dg-foot {
+  background: #2f6b62;
+  color: #eafaf6;
+  border-top: 3px solid var(--ink);
+  font-family: var(--font-geist-sans), system-ui, sans-serif;
+}
+
+.dg-foot__top {
+  max-width: 1080px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+  padding: clamp(1.75rem, 4vw, 2.75rem) clamp(1.25rem, 4vw, 3.5rem);
+}
+
+.dg-foot__logo {
+  width: clamp(120px, 14vw, 170px);
+  height: auto;
+  filter: brightness(0) invert(1); /* white knockout of the teal logo */
+}
+
+.dg-foot__nav {
+  display: flex;
+  gap: clamp(1rem, 2.5vw, 2rem);
+  flex-wrap: wrap;
+}
+
+.dg-foot__nav a {
+  color: #eafaf6;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+
+.dg-foot__nav a:hover {
+  text-decoration: underline;
+}
+
+.dg-foot__bottom {
+  margin: 0;
+  border-top: 1.5px solid rgba(255, 255, 255, 0.25);
+  padding: 0.9rem clamp(1.25rem, 4vw, 3.5rem);
+  text-align: center;
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+/* ============================================================
+   About page
+   ============================================================ */
+
+.dg-about {
+  min-height: 100dvh;
+  background: #f4ecd9;
+  color: #1c1a16;
+  font-family: var(--font-geist-sans), system-ui, sans-serif;
+}
+
+.dg-about__wrap {
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: clamp(2rem, 5vw, 4rem) clamp(1.25rem, 4vw, 3.5rem) clamp(3rem, 6vw, 4.5rem);
+}
+
+.dg-about__rule {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin: 0 0 1.25rem;
+  text-transform: uppercase;
+  letter-spacing: 0.25em;
+  font-weight: 800;
+  font-size: 0.8rem;
+  color: #15120e;
+}
+
+.dg-about__rule::before,
+.dg-about__rule::after {
+  content: "";
+  flex: 1;
+  height: 3px;
+  background: var(--ink);
+}
+
+.dg-about__title {
+  margin: 0 0 2rem;
+  max-width: 20ch;
+  font-size: clamp(2.4rem, 6vw, 4.6rem);
+  line-height: 1.02;
+  font-weight: 900;
+  letter-spacing: -0.02em;
+}
+
+.dg-about__title .accent {
+  color: var(--orange);
+}
+
+.dg-about__top {
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: clamp(1.5rem, 4vw, 3rem);
+  align-items: start;
+}
+
+.dg-about__lead p {
+  margin: 0 0 1.1rem;
+  font-size: 1.12rem;
+  line-height: 1.7;
+  color: #2a2620;
+}
+
+.dropcap::first-letter {
+  float: left;
+  padding: 0.04em 0.12em 0 0;
+  font-size: 3.5em;
+  line-height: 0.72;
+  font-weight: 900;
+  color: var(--orange);
+}
+
+.dg-badge {
+  display: inline-block;
+  margin-top: 0.5rem;
+  padding: 0.45rem 0.85rem;
+  background: #ffffff;
+  border: 2.5px solid var(--ink);
+  border-radius: 7px;
+  box-shadow: 4px 4px 0 var(--ink);
+  font-weight: 800;
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.dg-about__figure {
+  margin: 0;
+}
+
+.dg-about__img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border: 3px solid var(--ink);
+  box-shadow: 10px 10px 0 var(--ink);
+  filter: grayscale(1) contrast(1.05);
+}
+
+.dg-about__figure figcaption {
+  margin-top: 0.9rem;
+  padding-left: 0.6rem;
+  border-left: 3px solid var(--green);
+  font-size: 0.82rem;
+  font-style: italic;
+  color: #4a443a;
+}
+
+.dg-about__quote {
+  margin: clamp(2.5rem, 6vw, 4rem) 0;
+  padding: 1.6rem 0;
+  border-top: 3px solid var(--ink);
+  border-bottom: 3px solid var(--ink);
+  text-align: center;
+  font-size: clamp(1.6rem, 4vw, 2.6rem);
+  font-weight: 800;
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+}
+
+.dg-about__quote .accent {
+  color: var(--green);
+}
+
+.dg-about__body {
+  columns: 2;
+  column-gap: 2.5rem;
+  column-rule: 1px solid rgba(21, 18, 14, 0.18);
+}
+
+.dg-about__body p {
+  margin: 0 0 1.1rem;
+  font-size: 1.02rem;
+  line-height: 1.72;
+  color: #2a2620;
+}
+
+.dg-about__cards {
+  list-style: none;
+  margin: clamp(2.5rem, 5vw, 3.5rem) 0 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: clamp(1rem, 2.4vw, 1.6rem);
+}
+
+.dg-about__card {
+  padding: 1.4rem;
+  background: #fbf4e3;
+  border: 3px solid var(--ink);
+  border-radius: 12px;
+  box-shadow: 6px 6px 0 var(--ink);
+}
+
+.dg-about__card:nth-child(1) {
+  background: #cfe7e1;
+}
+
+.dg-about__card:nth-child(3) {
+  background: #f7d8b0;
+}
+
+.dg-about__card h3 {
+  margin: 0 0 0.5rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-size: 1.05rem;
+}
+
+.dg-about__card p {
+  margin: 0;
+  font-size: 0.94rem;
+  line-height: 1.55;
+  color: #2a2620;
+}
+
+.dg-about__cta {
+  margin-top: clamp(2.5rem, 5vw, 3.5rem);
+  padding: clamp(1.5rem, 4vw, 2.5rem);
+  background: #15120e;
+  color: #ffffff;
+  border: 3px solid var(--ink);
+  border-radius: 14px;
+  box-shadow: 8px 8px 0 var(--green);
+}
+
+.dg-about__cta h2 {
+  margin: 0 0 1.25rem;
+  max-width: 24ch;
+  font-size: clamp(1.4rem, 3vw, 2.1rem);
+  font-weight: 800;
+  line-height: 1.15;
+}
+
+.dg-about__actions {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+@media (max-width: 820px) {
+  .dg-about__top {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 760px) {
+  .dg-about__cards {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 680px) {
+  .dg-about__body {
+    columns: 1;
+  }
+}
+
+/* ============================================================
+   Page transition: home → About splits open from the center
+   (native View Transitions API; triggered from the hero nav)
+   ============================================================ */
+
+/* Only the hero's "About" link starts a view transition, so these root rules
+   apply solely to that navigation. Keep the home page held underneath... */
+::view-transition-old(root) {
+  animation: dgSplitHold 0.8s linear both;
+  z-index: 1;
+}
+
+/* ...while the About page clips open from a center horizontal split. */
+::view-transition-new(root) {
+  animation: dgSplitOpen 0.8s cubic-bezier(0.76, 0, 0.24, 1) both;
+  z-index: 2;
+}
+
+@keyframes dgSplitHold {
+  from,
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes dgSplitOpen {
+  from {
+    clip-path: inset(50% 0% 50% 0%);
+  }
+  to {
+    clip-path: inset(0% 0% 0% 0%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-old(root),
+  ::view-transition-new(root) {
+    animation-duration: 0s !important;
+    animation-delay: 0s !important;
+  }
 }
