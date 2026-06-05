@@ -222,8 +222,6 @@ body {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  /* black & white imagery — accents come from the UI on top */
-  filter: grayscale(1) contrast(1.08);
 }
 
 /* ---------- Hero content ---------- */

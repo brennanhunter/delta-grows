@@ -4,7 +4,7 @@ import Image from "next/image";
 import { useEffect, useLayoutEffect, useState } from "react";
 import TransitionLink from "@/app/components/TransitionLink";
 import logo from "@/public/logo.webp";
-import heroImage from "@/public/images/hands-hold-plant.jpeg";
+import heroImage from "@/public/images/hands-hold-plant.png";
 
 // Runs before paint on the client so return visits never flash the loader.
 const useIsomorphicLayoutEffect =
