@@ -61,9 +61,9 @@ export default function VideoBubbles() {
                 left: `${video.x}%`,
                 top: `${video.y}%`,
                 "--size": `${video.size}px`,
-                "--delay": `${(i % 5) * 0.6}s`,
-                "--dur": `${6 + (i % 4)}s`,
-                "--drift": `${i % 2 ? 10 : -10}px`,
+                "--delay": `${(i % 5) * 1.6}s`,
+                "--dur": `${18 + (i % 4) * 3}s`,
+                "--drift": `${i % 2 ? 16 : -16}px`,
               } as CSSProperties
             }
           >
