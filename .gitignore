@@ -24,6 +24,10 @@
 .DS_Store
 *.pem
 
+# downloaded source videos (keep on YouTube / a video host, not in git)
+/public/videos/
+*.mp4
+
 # debug
 npm-debug.log*
 yarn-debug.log*
