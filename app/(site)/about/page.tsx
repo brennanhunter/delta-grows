@@ -118,10 +118,10 @@ export default function AboutPage() {
         <section className="dg-about__cta">
           <h2>Join us as we cultivate a stronger, more self-sustaining Delta.</h2>
           <div className="dg-about__actions">
-            <Link href="/#courses" className="dg-btn dg-btn--primary">
+            <Link href="/courses" className="dg-btn dg-btn--primary">
               Explore Courses
             </Link>
-            <Link href="/#contact" className="dg-btn dg-btn--ghost">
+            <Link href="/contact" className="dg-btn dg-btn--ghost">
               Get in Touch
             </Link>
           </div>

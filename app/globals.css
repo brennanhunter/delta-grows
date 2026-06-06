@@ -7,6 +7,10 @@
   --ink: #15120e;
   --green: #589f95;
   --orange: #d66709;
+  /* Darker orange reserved for white text (#fff on this = 4.57:1, passes
+     WCAG AA). The brand --orange above is for accents/orange text on light
+     surfaces; never put white text directly on it. */
+  --orange-strong: #bd5905;
 }
 
 @theme inline {
@@ -19,18 +23,22 @@
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
 body {
   background: var(--background);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
   overflow-x: hidden;
+}
+
+/* ------------------------------------------------------------
+   Accessibility: visible keyboard-focus indicator.
+   A neobrutalist ink ring on any element focused via keyboard
+   (mouse clicks don't trigger :focus-visible, so it stays clean).
+   ------------------------------------------------------------ */
+:focus-visible {
+  outline: 3px solid var(--ink);
+  outline-offset: 2px;
+  border-radius: 3px;
 }
 
 /* ============================================================
@@ -395,12 +403,12 @@ body {
 }
 
 .dg-btn--primary {
-  background: var(--orange);
+  background: var(--orange-strong);
   color: #ffffff;
 }
 
 .dg-btn--primary:hover {
-  background: #e3760f;
+  background: #a84e04;
 }
 
 .dg-btn--ghost {
