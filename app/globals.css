@@ -23,6 +23,15 @@
   --font-mono: var(--font-geist-mono);
 }
 
+html {
+  /* Safety net against horizontal scroll: `clip` contains any element that
+     pushes past the viewport edge — including fixed overlays like the gallery
+     video stage, which `body`'s overflow rule below cannot reach. Unlike
+     `hidden`, `clip` doesn't create a scroll container, so vertical scrolling
+     and `position: sticky` keep working. */
+  overflow-x: clip;
+}
+
 body {
   background: var(--background);
   color: var(--foreground);
@@ -1149,6 +1158,27 @@ body {
 @media (max-width: 700px) {
   .dg-bubbles__field {
     --scale: 0.62;
+  }
+
+  /* Modal hardening for small screens: tighter padding gives the video more
+     room, and the close button tucks inside the corner so its negative offset
+     can't poke past the viewport edge (the root cause of horizontal scroll
+     when the player is open). */
+  .dg-stage {
+    padding: 1rem;
+  }
+
+  .dg-stage__inner {
+    width: 100%;
+  }
+
+  .dg-stage__close {
+    top: 6px;
+    right: 6px;
+  }
+
+  .dg-stage__frame {
+    box-shadow: 6px 6px 0 var(--ink);
   }
 }
 
