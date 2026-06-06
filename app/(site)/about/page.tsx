@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
-import SiteHeader from "@/app/components/SiteHeader";
 import aboutImage from "@/public/relevant_docs/current_site/about_us/about-image.png";
+import waltonLogo from "@/public/Walton_Family_Foundation_logo.svg.png";
 
 export const metadata: Metadata = {
   title: "About Us — Delta Grows",
@@ -28,8 +28,6 @@ const cards = [
 export default function AboutPage() {
   return (
     <main className="dg-about">
-      <SiteHeader active="About" />
-
       <article className="dg-about__wrap">
         <p className="dg-about__rule">About Us</p>
 
@@ -52,9 +50,15 @@ export default function AboutPage() {
               real-world training in agriculture, entrepreneurship, and
               financial resilience.
             </p>
-            <span className="dg-badge">
-              Supported by the Walton Family Foundation
-            </span>
+            <div className="dg-about__supporter">
+              <span className="dg-about__supporter-label">Supported by</span>
+              <Image
+                src={waltonLogo}
+                alt="Walton Family Foundation"
+                className="dg-about__waltonlogo"
+                sizes="280px"
+              />
+            </div>
           </div>
 
           <figure className="dg-about__figure">

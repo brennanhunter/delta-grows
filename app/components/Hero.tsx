@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { useEffect, useLayoutEffect, useState } from "react";
 import TransitionLink from "@/app/components/TransitionLink";
+import MobileMenu from "@/app/components/MobileMenu";
 import logo from "@/public/logo.webp";
 import heroImage from "@/public/images/hands-hold-plant.png";
 
@@ -139,13 +140,14 @@ export default function Hero() {
           </a>
           <nav className="dg-nav__links" aria-label="Primary">
             <TransitionLink href="/about">About</TransitionLink>
-            <a href="#courses">Courses</a>
+            <TransitionLink href="/courses">Courses</TransitionLink>
             <TransitionLink href="/gallery">Gallery</TransitionLink>
             <TransitionLink href="/resources">Resources</TransitionLink>
-            <a href="#contact" className="dg-nav__cta">
+            <TransitionLink href="/contact" className="dg-nav__cta">
               Contact
-            </a>
+            </TransitionLink>
           </nav>
+          <MobileMenu />
         </header>
 
         <div className="dg-hero__main">
@@ -164,12 +166,12 @@ export default function Hero() {
           </p>
 
           <div className="dg-hero__actions">
-            <a href="#courses" className="dg-btn dg-btn--primary">
-              Explore Courses
-            </a>
-            <a href="#contact" className="dg-btn dg-btn--ghost">
+            <TransitionLink href="/gallery" className="dg-btn dg-btn--primary">
+              Watch Our Stories
+            </TransitionLink>
+            <TransitionLink href="/contact" className="dg-btn dg-btn--ghost">
               Support the Mission
-            </a>
+            </TransitionLink>
           </div>
 
           <p className="dg-hero__trust">

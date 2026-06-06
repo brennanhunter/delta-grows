@@ -1351,3 +1351,639 @@ body {
     max-width: 480px;
   }
 }
+
+/* ============================================================
+   Courses — coming soon
+   ============================================================ */
+
+.dg-courses,
+.dg-notfound {
+  min-height: 100dvh;
+  background: #f4ecd9;
+  color: #1c1a16;
+  font-family: var(--font-geist-sans), system-ui, sans-serif;
+}
+
+.dg-soon__num {
+  margin: 0.5rem 0;
+  font-size: clamp(4.5rem, 16vw, 11rem);
+  font-weight: 900;
+  line-height: 1;
+  letter-spacing: -0.03em;
+  color: var(--green);
+  text-shadow: 6px 6px 0 var(--ink);
+}
+
+.dg-soon {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: clamp(2.5rem, 7vw, 5.5rem) clamp(1.25rem, 4vw, 3.5rem);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.dg-soon .dg-about__rule {
+  width: 100%;
+}
+
+.dg-soon__badge {
+  display: inline-block;
+  margin: 0.75rem 0 1.5rem;
+  padding: 0.5rem 1rem;
+  background: var(--green);
+  color: #08312c;
+  border: 2.5px solid var(--ink);
+  border-radius: 8px;
+  box-shadow: 5px 5px 0 var(--ink);
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-size: 0.85rem;
+}
+
+.dg-soon__title {
+  margin: 0 0 1.25rem;
+  max-width: 16ch;
+  font-size: clamp(2.4rem, 6vw, 4.4rem);
+  font-weight: 900;
+  letter-spacing: -0.02em;
+  line-height: 1.04;
+}
+
+.dg-soon__title .accent {
+  color: var(--orange);
+}
+
+.dg-soon__lead {
+  margin: 0 0 2rem;
+  max-width: 48ch;
+  color: #4a443a;
+  font-size: 1.08rem;
+  line-height: 1.7;
+}
+
+.dg-soon__actions {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+/* ============================================================
+   Mobile hamburger + slide-out drawer
+   ============================================================ */
+
+.dg-burger {
+  display: none; /* desktop: inline nav is used instead */
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  background: #f6efdf;
+  border: 2.5px solid var(--ink);
+  border-radius: 8px;
+  box-shadow: 3px 3px 0 var(--ink);
+  cursor: pointer;
+  transition: transform 0.12s ease, box-shadow 0.12s ease;
+}
+
+.dg-burger span {
+  display: block;
+  width: 22px;
+  height: 2.5px;
+  border-radius: 2px;
+  background: var(--ink);
+}
+
+.dg-burger:active {
+  transform: translate(2px, 2px);
+  box-shadow: 1px 1px 0 var(--ink);
+}
+
+.dg-drawer-root {
+  position: fixed;
+  inset: 0;
+  z-index: 70;
+  pointer-events: none;
+  visibility: hidden;
+  transition: visibility 0s linear 0.35s;
+}
+
+.dg-drawer-root.is-open {
+  pointer-events: auto;
+  visibility: visible;
+  transition: visibility 0s linear 0s;
+}
+
+.dg-drawer__backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(15, 18, 16, 0.5);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.dg-drawer-root.is-open .dg-drawer__backdrop {
+  opacity: 1;
+}
+
+.dg-drawer {
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 100dvh;
+  width: min(82vw, 320px);
+  display: flex;
+  flex-direction: column;
+  padding: 1.1rem 1.25rem 2rem;
+  background: #f6efdf;
+  border-left: 3px solid var(--ink);
+  transform: translateX(100%);
+  transition: transform 0.35s cubic-bezier(0.76, 0, 0.24, 1);
+}
+
+.dg-drawer-root.is-open .dg-drawer {
+  transform: translateX(0);
+}
+
+.dg-drawer__close {
+  align-self: flex-end;
+  display: grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  color: #ffffff;
+  background: var(--orange);
+  border: 2.5px solid var(--ink);
+  border-radius: 8px;
+  box-shadow: 3px 3px 0 var(--ink);
+  cursor: pointer;
+}
+
+.dg-drawer__close svg {
+  width: 22px;
+  height: 22px;
+}
+
+.dg-drawer__links {
+  display: flex;
+  flex-direction: column;
+  margin-top: 1.25rem;
+}
+
+.dg-drawer__links a {
+  padding: 0.9rem 0.25rem;
+  font-size: 1.45rem;
+  font-weight: 800;
+  color: #15120e;
+  text-decoration: none;
+  border-bottom: 2px solid rgba(21, 18, 14, 0.12);
+}
+
+.dg-drawer__links a:last-child {
+  color: var(--orange);
+}
+
+.dg-drawer__links a.is-active {
+  color: var(--orange);
+}
+
+@media (max-width: 760px) {
+  .dg-burger {
+    display: inline-flex;
+  }
+
+  .dg-mast__nav,
+  .dg-nav__links {
+    display: none;
+  }
+}
+
+/* ============================================================
+   Home — Impact / metrics + Walton feature
+   ============================================================ */
+
+.dg-impact {
+  position: relative;
+  z-index: 1; /* above the hero's fixed background */
+  background: #f4ecd9;
+  border-top: 3px solid var(--ink);
+  font-family: var(--font-geist-sans), system-ui, sans-serif;
+  color: #1c1a16;
+}
+
+.dg-impact__inner {
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: clamp(2.5rem, 6vw, 4.5rem) clamp(1.25rem, 4vw, 3.5rem);
+}
+
+.dg-impact__title {
+  margin: 0.25rem 0 clamp(1.75rem, 4vw, 2.75rem);
+  font-size: clamp(2rem, 5vw, 3.4rem);
+  font-weight: 900;
+  letter-spacing: -0.02em;
+  line-height: 1.04;
+}
+
+.dg-impact__title .accent {
+  color: var(--orange);
+}
+
+.dg-impact__stats {
+  list-style: none;
+  margin: 0 0 clamp(2rem, 4vw, 3rem);
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: clamp(1rem, 2.2vw, 1.5rem);
+}
+
+.dg-stat {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 1.3rem 1.25rem;
+  background: #fffdf6;
+  border: 3px solid var(--ink);
+  border-radius: 12px;
+  box-shadow: 6px 6px 0 var(--ink);
+}
+
+.dg-impact__stats li:nth-child(2) {
+  background: #cfe7e1;
+}
+.dg-impact__stats li:nth-child(3) {
+  background: #f7d8b0;
+}
+
+.dg-stat__value {
+  font-size: clamp(1.9rem, 4vw, 2.8rem);
+  font-weight: 900;
+  letter-spacing: -0.02em;
+  line-height: 1;
+  color: #15120e;
+}
+
+.dg-stat__label {
+  font-size: 0.9rem;
+  font-weight: 600;
+  line-height: 1.45;
+  color: #4a443a;
+}
+
+.dg-walton {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.5rem;
+  padding: clamp(1.75rem, 4vw, 2.75rem);
+  background: #15120e;
+  color: #f4ecd9;
+  border: 3px solid var(--ink);
+  border-radius: 14px;
+  box-shadow: 10px 10px 0 var(--green);
+}
+
+.dg-walton__eyebrow {
+  margin: 0;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: #8fd6c8;
+}
+
+.dg-walton__logo {
+  display: inline-flex;
+  margin: 0.35rem 0 0.25rem;
+  padding: 0.9rem 1.2rem;
+  background: #fffdf6;
+  border: 3px solid var(--ink);
+  border-radius: 10px;
+  box-shadow: 6px 6px 0 var(--green);
+}
+
+.dg-walton__logoimg {
+  width: clamp(220px, 42vw, 340px);
+  height: auto;
+}
+
+.dg-walton__copy {
+  margin: 0.5rem 0 1.25rem;
+  max-width: 52ch;
+  font-size: 1rem;
+  line-height: 1.65;
+  color: rgba(255, 255, 255, 0.82);
+}
+
+@media (max-width: 820px) {
+  .dg-impact__stats {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 460px) {
+  .dg-impact__stats {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ============================================================
+   Contact page
+   ============================================================ */
+
+.dg-contact {
+  min-height: 100dvh;
+  background: #f4ecd9;
+  color: #1c1a16;
+  font-family: var(--font-geist-sans), system-ui, sans-serif;
+}
+
+.dg-contact__head {
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: clamp(2rem, 5vw, 3.5rem) clamp(1.25rem, 4vw, 3.5rem) 0;
+}
+
+.dg-contact__title {
+  margin: 0.25rem 0 0.75rem;
+  font-size: clamp(2.2rem, 5.5vw, 4rem);
+  font-weight: 900;
+  letter-spacing: -0.02em;
+  line-height: 1.02;
+}
+
+.dg-contact__title .accent {
+  color: var(--orange);
+}
+
+.dg-contact__lead {
+  margin: 0;
+  max-width: 48ch;
+  color: #4a443a;
+  font-size: 1.05rem;
+  line-height: 1.6;
+}
+
+.dg-contact__grid {
+  max-width: 1080px;
+  margin: clamp(1.75rem, 4vw, 2.75rem) auto 0;
+  padding: 0 clamp(1.25rem, 4vw, 3.5rem);
+  display: grid;
+  grid-template-columns: 1.2fr 0.8fr;
+  gap: clamp(1.5rem, 3vw, 2.5rem);
+  align-items: start;
+}
+
+/* form */
+.dg-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: clamp(1.25rem, 3vw, 1.75rem);
+  background: #fffdf6;
+  border: 3px solid var(--ink);
+  border-radius: 12px;
+  box-shadow: 6px 6px 0 var(--ink);
+}
+
+.dg-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.dg-field span {
+  font-weight: 800;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #15120e;
+}
+
+.dg-field input,
+.dg-field textarea {
+  width: 100%;
+  padding: 0.7rem 0.8rem;
+  font: inherit;
+  color: #15120e;
+  background: #f4ecd9;
+  border: 2.5px solid var(--ink);
+  border-radius: 8px;
+  resize: vertical;
+}
+
+.dg-field input:focus,
+.dg-field textarea:focus,
+.dg-news__form input:focus {
+  outline: none;
+  box-shadow: 3px 3px 0 var(--green);
+}
+
+.dg-form .dg-btn {
+  align-self: flex-start;
+}
+
+/* aside */
+.dg-contact__aside {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(1.25rem, 3vw, 1.75rem);
+}
+
+.dg-contact__card {
+  padding: 1.4rem;
+  background: #cfe7e1;
+  border: 3px solid var(--ink);
+  border-radius: 12px;
+  box-shadow: 6px 6px 0 var(--ink);
+}
+
+.dg-contact__aside .dg-contact__card:nth-child(2) {
+  background: #f7d8b0;
+}
+
+.dg-contact__card h2 {
+  margin: 0 0 0.6rem;
+  font-size: 1.05rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.dg-contact__email {
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: #15120e;
+  text-decoration: underline;
+  text-decoration-color: var(--orange);
+  text-decoration-thickness: 3px;
+  text-underline-offset: 4px;
+  word-break: break-all;
+}
+
+.dg-contact__note {
+  margin: 0.9rem 0 0;
+  font-size: 0.9rem;
+  line-height: 1.55;
+  color: #2a2620;
+}
+
+.dg-social {
+  display: flex;
+  flex-direction: row;
+  gap: 0.6rem;
+}
+
+.dg-social__link {
+  display: grid;
+  place-items: center;
+  width: 46px;
+  height: 46px;
+  color: #15120e;
+  background: #fffdf6;
+  border: 2.5px solid var(--ink);
+  border-radius: 9px;
+  box-shadow: 3px 3px 0 var(--ink);
+  transition: transform 0.12s ease, box-shadow 0.12s ease,
+    background 0.2s ease, color 0.2s ease;
+}
+
+.dg-social__link:hover {
+  transform: translate(-1px, -1px);
+  box-shadow: 4px 4px 0 var(--ink);
+  background: var(--orange);
+  color: #ffffff;
+}
+
+.dg-social__link:active {
+  transform: translate(2px, 2px);
+  box-shadow: 1px 1px 0 var(--ink);
+}
+
+.dg-social__link svg {
+  width: 22px;
+  height: 22px;
+}
+
+/* newsletter band */
+.dg-news {
+  margin-top: clamp(2.5rem, 5vw, 4rem);
+  background: #2f6b62;
+  border-top: 3px solid var(--ink);
+}
+
+.dg-news__inner {
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: clamp(2.25rem, 5vw, 3.5rem) clamp(1.25rem, 4vw, 3.5rem);
+  text-align: center;
+}
+
+.dg-news__title {
+  margin: 0 0 0.5rem;
+  font-size: clamp(1.6rem, 4vw, 2.4rem);
+  font-weight: 900;
+  letter-spacing: -0.01em;
+  color: #ffffff;
+}
+
+.dg-news__copy {
+  margin: 0 0 1.5rem;
+  color: rgba(255, 255, 255, 0.85);
+  font-size: 1rem;
+}
+
+.dg-news__form {
+  display: flex;
+  gap: 0.75rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.dg-news__form input {
+  flex: 1 1 260px;
+  max-width: 340px;
+  padding: 0.7rem 0.9rem;
+  font: inherit;
+  color: #15120e;
+  background: #f4ecd9;
+  border: 2.5px solid var(--ink);
+  border-radius: 8px;
+}
+
+.dg-news__fine {
+  margin: 1rem 0 0;
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+@media (max-width: 820px) {
+  .dg-contact__grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ============================================================
+   Walton Family Foundation credit — About lead + footer
+   ============================================================ */
+
+.dg-about__supporter {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.55rem;
+  margin-top: 0.75rem;
+}
+
+.dg-about__supporter-label {
+  font-size: 0.78rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: #8a7f6a;
+}
+
+.dg-about__waltonlogo {
+  width: clamp(200px, 50vw, 280px);
+  height: auto;
+}
+
+.dg-foot__supporter {
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 0 clamp(1.25rem, 4vw, 3.5rem) clamp(1.5rem, 3vw, 2rem);
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  flex-wrap: wrap;
+}
+
+.dg-foot__supporter > span {
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.dg-foot__waltonchip {
+  display: inline-flex;
+  padding: 0.5rem 0.75rem;
+  background: #fffdf6;
+  border: 2.5px solid var(--ink);
+  border-radius: 8px;
+  box-shadow: 3px 3px 0 var(--ink);
+}
+
+.dg-foot__waltonimg {
+  width: clamp(150px, 40vw, 200px);
+  height: auto;
+  display: block;
+}

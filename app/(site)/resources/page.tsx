@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import SiteHeader from "@/app/components/SiteHeader";
 import TransitionLink from "@/app/components/TransitionLink";
 
 export const metadata: Metadata = {
@@ -77,8 +76,6 @@ function ActionIcon({ action }: { action: Doc["action"] }) {
 export default function ResourcesPage() {
   return (
     <main className="dg-res">
-      <SiteHeader active="Resources" />
-
       <div className="dg-res__head">
         <p className="dg-about__rule">Resources</p>
         <h1 className="dg-res__title">

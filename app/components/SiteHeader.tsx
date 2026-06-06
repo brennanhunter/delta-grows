@@ -1,19 +1,28 @@
+"use client";
+
 import Image from "next/image";
+import { usePathname } from "next/navigation";
 import TransitionLink from "@/app/components/TransitionLink";
+import MobileMenu from "@/app/components/MobileMenu";
 import logo from "@/public/logo.webp";
 
 const links = [
   { href: "/about", label: "About" },
-  { href: "/#courses", label: "Courses" },
+  { href: "/courses", label: "Courses" },
   { href: "/gallery", label: "Gallery" },
   { href: "/resources", label: "Resources" },
 ];
 
 /**
- * Newspaper-style masthead used on standard (non-hero) pages.
- * `active` matches a link label to mark the current page.
+ * Newspaper-style masthead used on standard (non-home) pages. Rendered once in
+ * the shared (site) layout; it figures out the active link from the URL.
  */
-export default function SiteHeader({ active }: { active?: string }) {
+export default function SiteHeader() {
+  const pathname = usePathname();
+  const isActive = (href: string) =>
+    pathname === href || pathname.startsWith(`${href}/`);
+  const activeLabel = links.find((link) => isActive(link.href))?.label;
+
   return (
     <header className="dg-mast">
       <div className="dg-mast__bar">
@@ -35,16 +44,17 @@ export default function SiteHeader({ active }: { active?: string }) {
             <TransitionLink
               key={link.href}
               href={link.href}
-              className={active === link.label ? "is-active" : undefined}
-              aria-current={active === link.label ? "page" : undefined}
+              className={isActive(link.href) ? "is-active" : undefined}
+              aria-current={isActive(link.href) ? "page" : undefined}
             >
               {link.label}
             </TransitionLink>
           ))}
-          <TransitionLink href="/#contact" className="dg-mast__cta">
+          <TransitionLink href="/contact" className="dg-mast__cta">
             Contact
           </TransitionLink>
         </nav>
+        <MobileMenu active={activeLabel} />
       </div>
       <div className="dg-mast__tagline">
         <span>Mississippi Delta</span>

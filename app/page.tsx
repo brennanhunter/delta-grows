@@ -1,9 +1,11 @@
 import Hero from "./components/Hero";
+import Impact from "./components/Impact";
 
 export default function Home() {
   return (
     <main id="top">
       <Hero />
+      <Impact />
     </main>
   );
 }

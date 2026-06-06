@@ -21,11 +21,3 @@ https://youtu.be/CqZRE8JDPGo?si=2OuxIbRwpPt5WlNO
 
 https://youtu.be/FHTVPy5dqXE?si=udmAxB8dtQPcEWWh
 
-
-Africa Work 
-https://youtu.be/Z2BQb9IbTCk?si=aPVJP39iaNmRm0jn
-
-https://youtu.be/N-5o8xzRI4o?si=SSPfu4y2oGMkOYCJ
-
-https://youtu.be/GZDNZNedGcs?si=QnX16laR4Skm7HW5
-
