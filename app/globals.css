@@ -327,6 +327,28 @@ body {
   box-shadow: 5px 5px 0 var(--ink);
 }
 
+/* Donate CTA in the homepage hero nav (AA-safe --orange-strong for white text) */
+.dg-nav__donate {
+  padding: 0.5rem 1.05rem;
+  background: var(--orange-strong);
+  color: #ffffff !important;
+  font-weight: 800;
+  border: 2.5px solid var(--ink);
+  border-radius: 7px;
+  box-shadow: 4px 4px 0 var(--ink);
+  transition: transform 0.12s ease, box-shadow 0.12s ease;
+}
+
+.dg-nav__donate:hover {
+  transform: translate(-1px, -1px);
+  box-shadow: 5px 5px 0 var(--ink);
+}
+
+.dg-nav__donate:active {
+  transform: translate(2px, 2px);
+  box-shadow: 2px 2px 0 var(--ink);
+}
+
 .dg-nav__cta:active {
   transform: translate(2px, 2px);
   box-shadow: 2px 2px 0 var(--ink);

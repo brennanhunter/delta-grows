@@ -146,8 +146,16 @@ export default function Hero() {
             <TransitionLink href="/contact" className="dg-nav__cta">
               Contact
             </TransitionLink>
+            <TransitionLink href="/donate" className="dg-nav__donate">
+              Donate
+            </TransitionLink>
           </nav>
-          <MobileMenu />
+          <div className="dg-mast__end">
+            <TransitionLink href="/donate" className="dg-mast__donate">
+              Donate
+            </TransitionLink>
+            <MobileMenu />
+          </div>
         </header>
 
         <div className="dg-hero__main">
