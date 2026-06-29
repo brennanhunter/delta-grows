@@ -74,6 +74,14 @@ export default function MobileMenu({ active }: { active?: string }) {
               </TransitionLink>
             ))}
           </div>
+
+          <TransitionLink
+            href="/donate"
+            className="dg-drawer__donate"
+            onClick={() => setOpen(false)}
+          >
+            Donate
+          </TransitionLink>
         </nav>
       </div>
     </>

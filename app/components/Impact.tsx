@@ -77,8 +77,8 @@ export default function Impact() {
             funding the training, mentorship, and infrastructure that help Delta
             farmers build food security and generational wealth.
           </p>
-          <TransitionLink href="/contact" className="dg-btn dg-btn--primary">
-            Become a Supporter
+          <TransitionLink href="/donate" className="dg-btn dg-btn--primary">
+            Donate Now
           </TransitionLink>
         </div>
       </div>

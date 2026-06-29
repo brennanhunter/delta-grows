@@ -21,6 +21,7 @@ export default function SiteFooter() {
           <TransitionLink href="/gallery">Gallery</TransitionLink>
           <TransitionLink href="/resources">Resources</TransitionLink>
           <TransitionLink href="/contact">Contact</TransitionLink>
+          <TransitionLink href="/donate">Donate</TransitionLink>
         </nav>
       </div>
       <div className="dg-foot__supporter">

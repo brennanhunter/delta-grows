@@ -53,8 +53,16 @@ export default function SiteHeader() {
           <TransitionLink href="/contact" className="dg-mast__cta">
             Contact
           </TransitionLink>
+          <TransitionLink href="/donate" className="dg-mast__donate">
+            Donate
+          </TransitionLink>
         </nav>
-        <MobileMenu active={activeLabel} />
+        <div className="dg-mast__end">
+          <TransitionLink href="/donate" className="dg-mast__donate">
+            Donate
+          </TransitionLink>
+          <MobileMenu active={activeLabel} />
+        </div>
       </div>
       <div className="dg-mast__tagline">
         <span>Mississippi Delta</span>

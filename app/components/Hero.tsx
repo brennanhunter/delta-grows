@@ -169,7 +169,7 @@ export default function Hero() {
             <TransitionLink href="/gallery" className="dg-btn dg-btn--primary">
               Watch Our Stories
             </TransitionLink>
-            <TransitionLink href="/contact" className="dg-btn dg-btn--ghost">
+            <TransitionLink href="/donate" className="dg-btn dg-btn--ghost">
               Support the Mission
             </TransitionLink>
           </div>

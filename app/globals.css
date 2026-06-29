@@ -572,6 +572,168 @@ body {
   transition: transform 0.12s ease, box-shadow 0.12s ease;
 }
 
+/* Donate CTA in the masthead nav (uses AA-safe --orange-strong for white text) */
+.dg-mast__donate {
+  padding: 0.5rem 1.05rem;
+  background: var(--orange-strong);
+  color: #ffffff !important;
+  font-weight: 800;
+  border: 2.5px solid var(--ink);
+  border-radius: 7px;
+  box-shadow: 4px 4px 0 var(--ink);
+  transition: transform 0.12s ease, box-shadow 0.12s ease;
+}
+
+.dg-mast__donate:hover {
+  transform: translate(-1px, -1px);
+  box-shadow: 5px 5px 0 var(--ink);
+}
+
+.dg-mast__donate:active {
+  transform: translate(2px, 2px);
+  box-shadow: 2px 2px 0 var(--ink);
+}
+
+/* Right-side bar group (Donate + hamburger). Shown only on mobile, where the
+   desktop nav — and its Donate CTA — are hidden. On desktop, Donate lives in
+   the nav, so this group is hidden to keep the bar's two-item layout. */
+.dg-mast__end {
+  display: none;
+}
+
+/* Donate CTA at the bottom of the mobile drawer */
+.dg-drawer__donate {
+  margin-top: 1.5rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.85rem 1.5rem;
+  background: var(--orange-strong);
+  color: #ffffff;
+  font-size: 1.1rem;
+  font-weight: 800;
+  text-decoration: none;
+  border: 2.5px solid var(--ink);
+  border-radius: 9px;
+  box-shadow: 5px 5px 0 var(--ink);
+}
+
+/* ============================================================
+   Donate page
+   ============================================================ */
+.dg-donate {
+  min-height: 100dvh;
+  background: #f4ecd9;
+  color: #1c1a16;
+  font-family: var(--font-geist-sans), system-ui, sans-serif;
+}
+
+.dg-donate__wrap {
+  max-width: 1040px;
+  margin: 0 auto;
+  padding: clamp(2rem, 5vw, 3.5rem) clamp(1.25rem, 4vw, 3.5rem)
+    clamp(3rem, 6vw, 5rem);
+}
+
+.dg-donate__title {
+  margin: 0.25rem 0 0;
+  font-size: clamp(2.2rem, 5.5vw, 3.6rem);
+  font-weight: 900;
+  letter-spacing: -0.02em;
+  line-height: 1.04;
+}
+
+.dg-donate__title .accent {
+  color: var(--orange);
+}
+
+.dg-donate__lead {
+  margin: 1rem 0 0;
+  max-width: 64ch;
+  font-size: 1.05rem;
+  line-height: 1.6;
+  color: #3a342b;
+}
+
+.dg-donate__grid {
+  margin-top: clamp(1.75rem, 4vw, 2.75rem);
+  display: grid;
+  grid-template-columns: 1.35fr 1fr;
+  gap: clamp(1.25rem, 3vw, 2rem);
+  align-items: start;
+}
+
+.dg-donate__card,
+.dg-donate__aside {
+  padding: clamp(1.4rem, 3vw, 2rem);
+  background: #ffffff;
+  border: 3px solid var(--ink);
+  border-radius: 14px;
+  box-shadow: 8px 8px 0 var(--ink);
+}
+
+.dg-donate__aside {
+  background: #cfe7e1;
+}
+
+.dg-donate__cardtitle,
+.dg-donate__asidetitle {
+  margin: 0 0 0.5rem;
+  font-size: 1.3rem;
+  font-weight: 800;
+}
+
+.dg-donate__cardcopy {
+  margin: 0 0 1.25rem;
+  color: #3a342b;
+  line-height: 1.55;
+}
+
+.dg-donate__list {
+  margin: 0;
+  padding-left: 1.1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  line-height: 1.45;
+}
+
+.dg-donate__supporter {
+  margin-top: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  font-weight: 700;
+  font-size: 0.85rem;
+}
+
+.dg-donate__waltonimg {
+  width: clamp(150px, 60%, 220px);
+  height: auto;
+}
+
+/* PayPal renders its own buttons into this container */
+.dg-donate__paypal {
+  min-height: 52px;
+}
+
+.dg-donate__note {
+  margin: 0.75rem 0 0;
+  font-size: 0.9rem;
+  color: #5a5346;
+}
+
+.dg-donate__note a {
+  color: var(--orange-strong);
+  font-weight: 700;
+}
+
+@media (max-width: 820px) {
+  .dg-donate__grid {
+    grid-template-columns: 1fr;
+  }
+}
+
 .dg-mast__cta:hover {
   transform: translate(-1px, -1px);
   box-shadow: 5px 5px 0 var(--ink);
@@ -1599,6 +1761,13 @@ body {
   .dg-mast__nav,
   .dg-nav__links {
     display: none;
+  }
+
+  /* surface the Donate + menu group in the bar on mobile */
+  .dg-mast__end {
+    display: flex;
+    align-items: center;
+    gap: 0.55rem;
   }
 }
 
